@@ -72,9 +72,7 @@ namespace DiscordBotStarter
         private async Task HandleCommandAsync(SocketMessage arg)
         {
             // Bail out if it's a System Message.
-            var msg = arg as SocketUserMessage;
-            if (msg == null) return;
-
+            if (arg is not SocketUserMessage msg) return;
 
             // We don't want the bot to respond to itself or other bots.
             if (msg.Author.Id == _client.CurrentUser.Id || msg.Author.IsBot) return;
