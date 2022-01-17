@@ -30,12 +30,12 @@ using IHost host = Host.CreateDefaultBuilder(args)
 
     var dir = Directory.GetCurrentDirectory();
 
-    //Create a file called discord.conf (or whatever), and add your token there. DO NOT HARDCODE THE TOKEN!
+    //Create a file called discord-conf.json (or whatever), and add your token there. DO NOT HARDCODE THE TOKEN!
     configurationBuilder.SetBasePath(dir).AddJsonFile("discord-conf.json", optional: true, reloadOnChange: true).AddEnvironmentVariables().Build();
 
     IConfigurationRoot configurationRoot = configurationBuilder.Build();
 
-    var section = configurationRoot.GetSection("DiscordToken");
+    var section = configurationRoot.GetSection(nameof(DiscordSettings));
 
     services.Configure<DiscordSettings>(section);
 
