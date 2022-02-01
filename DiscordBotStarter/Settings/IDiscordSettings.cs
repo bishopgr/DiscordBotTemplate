@@ -2,6 +2,6 @@
 {
     public interface IDiscordSettings
     {
-        string Token { get; set; }
+        string? Token { get; set; }
     }
 }

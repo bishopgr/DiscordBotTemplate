@@ -14,16 +14,17 @@ namespace DiscordBotStarter
         private readonly IDiscordSettings _discordSettings;
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<Bot> _logger;
+
         public Bot(DiscordSocketClient client, CommandService commands, IDiscordSettings discordSettings, IServiceProvider serviceProvider, ILogger<Bot> logger)
         {
             _client = client;
             _commands = commands;
-            _discordSettings = discordSettings ?? throw new ArgumentNullException(nameof(discordSettings));
-            _serviceProvider = serviceProvider;
+            _discordSettings = discordSettings ?? throw new ArgumentNullException(nameof(discordSettings), "The argument supplied is null. Ensure the object is instantiated or exists first.");
+            _serviceProvider = serviceProvider ?? throw new ArgumentException(nameof(serviceProvider), "The argument supplied is null. Ensure the object is instantiated or exists first.");
             _logger = logger;
         }
 
-        public Task Log(LogMessage message)
+        public static Task Log(LogMessage message)
         {
             switch (message.Severity)
             {
@@ -83,12 +84,12 @@ namespace DiscordBotStarter
             // you want to prefix your commands with.
             // Uncomment the second half if you also want
             // commands to be invoked by mentioning the bot instead.
-            if (msg.HasCharPrefix('!', ref pos) /* || msg.HasMentionPrefix(_client.CurrentUser, ref pos) */)
+            if (msg.HasCharPrefix('!', ref pos) || msg.HasMentionPrefix(_client.CurrentUser, ref pos))
             {
                 // Create a Command Context.
                 var context = new SocketCommandContext(_client, msg);
 
-                _logger.LogInformation($"Executing {context.Message}.");
+                _logger.LogInformation("Executing {message}.", context.Message);
 
                 // Execute the command. (result does not indicate a return value, 
                 // rather an object stating if the command executed successfully).

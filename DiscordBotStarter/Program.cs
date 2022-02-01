@@ -26,10 +26,9 @@ using IHost host = Host.CreateDefaultBuilder(args)
     services.AddSingleton<DiscordSocketClient>();
     services.AddSingleton<Bot>();
 
-    IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-
     var dir = Directory.GetCurrentDirectory();
 
+    IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
     //Create a file called discord-conf.json (or whatever), and add your token there. DO NOT HARDCODE THE TOKEN!
     configurationBuilder.SetBasePath(dir).AddJsonFile("discord-conf.json", optional: true, reloadOnChange: true).AddEnvironmentVariables().Build();
 

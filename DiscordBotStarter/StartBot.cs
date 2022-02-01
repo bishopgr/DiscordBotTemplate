@@ -13,7 +13,6 @@ namespace DiscordBotStarter
             var robotStarter = provider.GetRequiredService<Bot>();
 
             await robotStarter.ConnectAsync(services);
-
         }
     }
 }
